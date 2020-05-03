@@ -11,6 +11,12 @@ def list(request):
     return render(request, 'listings/index.html')
 
 
+# def listing(self):
+#     queue = Products.objects.raw(
+#         'SELECT * FROM Products WHERE ProductID NOT IN (SELECT ProductID FROM Like WHERE user == logedUser)'
+#         '                             AND ProductID NOT IN (SELECT ProductID FROM Hate WHERE user == loggedUser);')
+
+
 def messages(request):
     return render(request, 'messages/index.html')
 

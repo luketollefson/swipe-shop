@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/Documents/CSC313/class_assignment_5/.idea/class_assignment_5.iml" filepath="$USER_HOME$/Documents/CSC313/class_assignment_5/.idea/class_assignment_5.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/swipe-shop.iml" filepath="$PROJECT_DIR$/.idea/swipe-shop.iml" />
     </modules>
   </component>
