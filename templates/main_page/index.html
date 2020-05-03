@@ -17,17 +17,21 @@
 </head>
 
 <body>
-    <div>
-        {% include "header/header.html" %}
-    </div>
-
-    <div>
-        {% include "main_page_listing/index.html" %}
-    </div>
+    {% include "header/header.html" %} {% include "main_page_listing/index.html" %}
 
     <div class="container" id="optionsContainer">
-        <button class="btn" id="hateButton" (click)="hate()">Hate It</button>
-        <button class="btn" id="loveButton" (click)="love()">Love It</button>
+        <form method="POST" action="hate">
+            {% csrf_token %}
+            <button class="btn" id="hateButton">Hate It</button>
+        </form>
+
+        <form method="POST" action="love">
+            {% csrf_token %}
+            <button class="btn" id="loveButton">Love It</button>
+        </form>
+
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

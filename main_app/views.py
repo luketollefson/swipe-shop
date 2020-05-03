@@ -6,6 +6,17 @@ from django.http import HttpResponse
 def index(request):
     return render(request, 'main_page/index.html')
 
+def hate(request):
+    # add to hate table
+    print('hating')
+    return render(request, 'main_page/index.html')
+
+def love(request):
+    # add to love table
+    print('loving')
+    return render(request, 'main_page/index.html')
+
+
 
 def list(request):
     return render(request, 'listings/index.html')
@@ -47,3 +58,19 @@ class Listing:
         self.price = price
         self.city = city
         self.imageUrl = imageUrl
+
+class Message:
+    def __init__(self, toUser, fromUser, messageBody, sentDate, attachmentUrl):
+        self.toUser = toUser
+        self.fromUser = fromUser
+        self.messageBody = messageBody
+        self.sentDate = sentDate
+        self.attachmentUrl = attachmentUrl
+
+class User:
+    def __init__(self, id, username, location, pictureUrl, listings):
+        self.id = id
+        self.username = username
+        self.location = location
+        self.pictureUrl = pictureUrl
+        self.listing = listings
