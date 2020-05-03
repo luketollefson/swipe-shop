@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import datetime
 
 
 # Create your views here.
@@ -29,7 +30,17 @@ def list(request):
 
 
 def messages(request):
-    return render(request, 'messages/index.html')
+    messages = [
+        MessageAsDisplayed(True, 'as;dflkasdf', datetime.datetime.now(), True),
+        MessageAsDisplayed(True, 'askleg', datetime.datetime.now(), False),
+        MessageAsDisplayed(True, 'as;ashevajsheg', datetime.datetime.now(), False),
+    ]
+    otherUser = {
+        'username' : 'otherrrr.userrr',
+        'picture' : 'https://i.imgur.com/Ss75Vfa.jpg'
+    }
+    messages_dict = {'messages' : messages, 'otherUser' : otherUser}
+    return render(request, 'messages/index.html', context=messages_dict)
 
 
 def new_list(request):
@@ -52,6 +63,7 @@ def profile(request):
 
 
 
+
 class Listing:
     def __init__(self, title, price, city, imageUrl):
         self.title = title
@@ -59,13 +71,12 @@ class Listing:
         self.city = city
         self.imageUrl = imageUrl
 
-class Message:
-    def __init__(self, toUser, fromUser, messageBody, sentDate, attachmentUrl):
-        self.toUser = toUser
-        self.fromUser = fromUser
+class MessageAsDisplayed:
+    def __init__(self, recieved, messageBody, sentDate, needsDateSeparator):
+        self.recieved = recieved
         self.messageBody = messageBody
         self.sentDate = sentDate
-        self.attachmentUrl = attachmentUrl
+        self.needsDateSeparator = needsDateSeparator
 
 class User:
     def __init__(self, id, username, location, pictureUrl, listings):
@@ -74,3 +85,15 @@ class User:
         self.location = location
         self.pictureUrl = pictureUrl
         self.listing = listings
+
+
+
+users = [
+    User(0, 'terry.crews', 'Fargo, ND', 'https://i.imgur.com/Ss75Vfa.jpg', []),
+    User(1, 'some.user', 'Fargo, ND', 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',  []),
+    User(2, 'someother.user', 'Fargo, ND', 'https://scx1.b-cdn.net/csz/news/800/2015/howwilldatar.jpg',  []),
+    User(3, 'random.person21', 'Fargo, ND', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSYW0XEqHljEUNvoFfmEEpM7Z4cyq5V66MNrLyXerInvBFM5KUc&usqp=CAU',  []),
+    User(4, 'kanye.west', 'Fargo, ND', 'https://peoplescience.maritz.com/-/media/Maritz/Project/PeopleScience/Articles/adult-grandma-elderly-432722.ashx?h=900&w=1200&la=en&hash=5F66C65B032FEE90B10A489D08EC8B7D0E64B8CE',  []),
+    User(5, 'kungfu.kenny', 'Fargo, ND', 'https://pbs.twimg.com/profile_images/879355674957926400/VSGZHGib_400x400.jpg', []),
+    User(6, 'woah.kenny', 'Fargo, ND', 'https://i.imgur.com/Ss75Vfa.jpg', []),
+]

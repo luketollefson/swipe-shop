@@ -20,54 +20,37 @@
 
         <div id="otherUser" class="d-flex justify-content-between">
             <img (click)="back()" id="backIcon" src="{% static 'images/back.png' %}" alt="back">
-            <div>Other Username</div>
+            <div>{{otherUser.username}}</div>
             <div id="rightSpace"></div>
         </div>
 
         <div #scrollable id="messages">
             <div id="messagesInner">
-                <!-- If no messages -->
+                {% if not messages %}
                 <div class="newDay">
                     No Messages
                     <hr class="solid">
                 </div>
-
-
-                <!-- <div *ngFor="let message of messages" class="message">
-
-
-                    <div *ngIf="needsDateSeparator[messages.indexOf(message)]" class="newDay">
-                        {{message.sentDate | date:'EEEE, MMMM d'}}
-                        <hr class="solid">
+                {% endif %} {% for message in messages %} {% if message.needsDateSeparator %}
+                <div class="newDay">
+                    {{message.sentDate}}
+                    <hr class="solid">
+                </div>
+                {% endif %} {% if message.recieved %}
+                <div class="messages-left">
+                    <div class="time time-left">{{message.sentDate}}</div>
+                    <img class="messageProfilePicture" src="{{otherUser.picture}}" alt="profile">
+                    <div class="msg msg-left fade-in" [ngClass]="{'startMessageLeft' : messageIsStart[messages.indexOf(message)], 'middleMessageLeft' : messageIsMiddle[messages.indexOf(message)]}">{{message.messageBody}}</div>
+                </div>
+                {% endif %} {% if not message.recieved %}
+                <div *ngIf="message.toUser.username != myUsername" class="messages-right">
+                    <div *ngIf="!(messageIsMiddle[messages.indexOf(message)] || messageIsEnd[messages.indexOf(message)])" class="time time-right">{{message.sentDate | date:'h:mm a'}}</div>
+                    <div *ngIf="message.attachmentUrl == ''" class="msg msg-right fade-in" [ngClass]="{'startMessageRight' : messageIsStart[messages.indexOf(message)], 'middleMessageRight' : messageIsMiddle[messages.indexOf(message)]}">{{message.message}}</div>
+                    <div *ngIf="message.attachmentUrl != ''" class="attachmentContainerRight" [ngClass]="{'hasAttachmentMessage' : hasAttachmentMessage[messages.indexOf(message)]}">
+                        <img class="attachment" src={{message.attachmentUrl}} alt="attachment">
                     </div>
-
-                    <div *ngIf="message.toUser.username == myUsername" class="messages-left">
-                        <div *ngIf="!(messageIsMiddle[messages.indexOf(message)] || messageIsEnd[messages.indexOf(message)])" class="time time-left">{{message.sentDate | date:'h:mm a'}}</div>
-                        <img *ngIf="message.attachmentUrl == ''" class="messageProfilePicture" src="{{message.fromUser.picture}}" alt="profile">
-                        <div *ngIf="message.attachmentUrl == ''" class="msg msg-left fade-in" [ngClass]="{'startMessageLeft' : messageIsStart[messages.indexOf(message)], 'middleMessageLeft' : messageIsMiddle[messages.indexOf(message)]}">{{message.message}}</div>
-
-                        <div *ngIf="message.attachmentUrl != ''" class="attachmentContainerLeft">
-                            <img class="attachment" src={{message.attachmentUrl}} alt="attachment">
-                        </div>
-
-                    </div>
-
-                    <div *ngIf="message.toUser.username != myUsername" class="messages-right">
-                        <div *ngIf="!(messageIsMiddle[messages.indexOf(message)] || messageIsEnd[messages.indexOf(message)])" class="time time-right">{{message.sentDate | date:'h:mm a'}}</div>
-                        <div *ngIf="message.attachmentUrl == ''" class="msg msg-right fade-in" [ngClass]="{'startMessageRight' : messageIsStart[messages.indexOf(message)], 'middleMessageRight' : messageIsMiddle[messages.indexOf(message)]}">{{message.message}}</div>
-                        <div *ngIf="message.attachmentUrl != ''" class="attachmentContainerRight" [ngClass]="{'hasAttachmentMessage' : hasAttachmentMessage[messages.indexOf(message)]}">
-                            <img class="attachment" src={{message.attachmentUrl}} alt="attachment">
-                        </div>
-                    </div>
-                </div> -->
-
-
-                <!-- <div *ngIf="isInquiry" class="attachmentContainerRight">
-                    <div class="attachmentMessageText">This attachment will be</div>
-                    <div class="attachmentMessageTextCont">sent with your message</div>
-                    <img class="attachment" src={{inquiryImage}} alt="inquiring">
-                </div> -->
-
+                </div>
+                {% endif %} {% endfor %}
             </div>
         </div>
 
